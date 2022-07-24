@@ -1,4 +1,5 @@
 import React from 'react';
+import Message from './Message';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -17,9 +18,14 @@ export default class Chat extends React.Component {
                 message: this.state.message,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             }
-            let tmp = this.state.messageList;
-            tmp.push(messageData)
-            this.setState({messageList: tmp});
+            // const tmp = this.state.messageList.push(
+            //     <Message author={messageData.author} message={messageData.message } date={messageData.date} />
+            // );
+
+
+            // tmp = this.arrayAddElement(tmp, <Message author={messageData.author} message={messageData.message} time={messageData.time} />);
+            this.setState({messageList: [this.state.messageList, <Message author={messageData.author} message={messageData.message} time={messageData.time} />]});
+
             console.log(this.state.messageList);
             await this.props.socket.emit("sendMessage", messageData);
         }
@@ -27,9 +33,15 @@ export default class Chat extends React.Component {
 
     componentDidMount = () => {
         this.props.socket.on("receiveMessage", (data) => {
-            this.setState({messageList: this.state.messageList.push(data)});
+            // const tmp = this.arrayAddElement(this.state.messageList, <Message author={data.author} message={data.message } time={data.time} />)
+            this.setState({messageList: [this.state.messageList, <Message author={data.author} message={data.message } time={data.time} />]});
             console.log(this.state.messageList);
         });
+    }
+
+    arrayAddElement(array, element) {
+        array = array.push(element)
+        return array;
     }
 
     disconnect = () => {
@@ -43,9 +55,7 @@ export default class Chat extends React.Component {
                     {this.props.room} <button onClick={this.disconnect}>Verbindung Trennen</button>
                 </div>
                 <div id="chat-body">
-                    {/* {this.state.messageList.forEach((data) => {
-                        return <h1>{data.message}</h1>
-                    })} */}
+                    {this.state.messageList}
                 </div>
                 <div id="chat-footer">
                     <input type="text" placeholder="..." onChange={(event) => {
