@@ -18,12 +18,11 @@ export default class Chat extends React.Component {
                 message: this.state.message,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             }
-            // const tmp = this.state.messageList.push(
-            //     <Message author={messageData.author} message={messageData.message } date={messageData.date} />
-            // );
 
 
-            // tmp = this.arrayAddElement(tmp, <Message author={messageData.author} message={messageData.message} time={messageData.time} />);
+            //eigene nachrichten andere farbe als fremde
+            //eigene nachrichtren nach rechts schieben
+            
             this.setState({messageList: [this.state.messageList, <Message author={messageData.author} message={messageData.message} time={messageData.time} />]});
 
             console.log(this.state.messageList);
@@ -33,7 +32,6 @@ export default class Chat extends React.Component {
 
     componentDidMount = () => {
         this.props.socket.on("receiveMessage", (data) => {
-            // const tmp = this.arrayAddElement(this.state.messageList, <Message author={data.author} message={data.message } time={data.time} />)
             this.setState({messageList: [this.state.messageList, <Message author={data.author} message={data.message } time={data.time} />]});
             console.log(this.state.messageList);
         });
