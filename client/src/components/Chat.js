@@ -21,7 +21,7 @@ export default class Chat extends React.Component {
             //eigene nachrichten andere farbe als fremde
             //eigene nachrichtren nach rechts schieben
             this.setState(
-                {messageList: [this.state.messageList, <div className="w-full"><Message author={messageData.author} message={messageData.message} time={messageData.time} source="self" /></div>]}
+                {messageList: [this.state.messageList, <div className="w-full p-3"><Message author={messageData.author} message={messageData.message} time={messageData.time} source="self" /></div>]}
             );
             // console.log(this.state.messageList);
             await this.props.socket.emit("sendMessage", messageData);
@@ -32,13 +32,13 @@ export default class Chat extends React.Component {
     componentDidMount = () => {
         this.props.socket.on("receiveMessage", (data) => {
             this.setState(
-                {messageList: [this.state.messageList, <div className="w-full"><Message author={data.author} message={data.message } time={data.time} source="other" /></div>]}
+                {messageList: [this.state.messageList, <div className="w-full p-3"><Message author={data.author} message={data.message } time={data.time} source="other" /></div>]}
             );
             // console.log(this.state.messageList);
         });
     }
 
-    arrayAddElement(array, element) {
+    arrayAddElement = (array, element) => {
         array = array.push(element)
         return array;
     }
@@ -48,13 +48,13 @@ export default class Chat extends React.Component {
         this.props.socket.emit("disconnectRoom", this.props.room);
     }
 
-    render() {
+    render = () => {
         return (
-            <div className="w-1/2 content-box border border-md border-black block">
-                <div id="chat-header">
-                    {this.props.room} <button onClick={this.disconnect}>Verbindung Trennen</button>
+            <div className="w-1/3 content-box">
+                <div id="chat-header border border-md">
+                    Raum: {this.props.room} <button className="bg-emerald-600 text-white p-2 rounded-md" onClick={this.disconnect}>Verbindung Trennen</button>
                 </div>
-                <div id="chat-body h-1/2 min-h-1/2 max-h-1/2 overflow-auto block p-2">
+                <div id="chat-body h-1/2 min-h-1/2 max-h-1/2 overflow-auto block border border-md border-black block">
                     {this.state.messageList}
                 </div>
                 <div id="chat-footer">
