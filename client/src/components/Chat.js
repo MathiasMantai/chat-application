@@ -51,7 +51,7 @@ export default class Chat extends React.Component {
         return (
             <div className="w-1/3">
                 <div className="chat-header border border-md align-middle space-between flow-root">
-                    <div className="float-left align-middle">
+                    <div className="float-left p-2">
                         Raum: {this.props.room}
                     </div> 
                     <div className="float-right">
@@ -65,7 +65,9 @@ export default class Chat extends React.Component {
                 </div>
                 <div className="chat-footer border border-md">
                     <input type="text" className="w-5/6 p-2" placeholder="Deine Nachricht" value={this.state.message} onChange={(event) => {
-                        this.setState({message: event.target.value});
+                        this.setState(
+                            {message: event.target.value}
+                        );
                     }}
                       />
                     <button className="bg-emerald-600 text-white p-2 w-1/6" onClick={this.sendMessage}>Senden</button>
