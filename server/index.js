@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -12,7 +11,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:3000",
-        method: ["POST", "GET"]
+        method: ["POST", "GET"],
+        transports: ["websocket"]
     }
 })
 
@@ -22,6 +22,11 @@ io.on('connection', (socket) => {
     socket.on('connectToRoom', (data) => {
         socket.join(data);
         console.log("User " + socket.id + " ist Raum " + data + " beigetreten");
+        socket.to(data).emit("memberList", "test");
+    });
+
+    socket.on('disconnectRoom', (room) => {
+        socket.leave(room)
     });
 
     socket.on("sendMessage", (messageData) => {
