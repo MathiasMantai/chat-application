@@ -1,1 +1,2 @@
 -- React Chat Anwendung
+- Version 0.0.1
