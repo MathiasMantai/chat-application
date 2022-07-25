@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       { !showChat ? (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-screen"> 
             <div className="flex flex-col space-y-4  w-3/6 sm:w-3/6 md:3/6 lg:w-1/6">
                 <h1 className="text-lg">Chat</h1>
                 <input className="border border-emerald-600 border-md focus:border-emerald-800 p-2" type="text" placeholder="Name" onChange={(event) => {setUsername(event.target.value)}} />
@@ -29,6 +29,7 @@ function App() {
             </div>
         </div>
       ) : (
+        //flex flex-col items-center justify-center h-screen
         <div className="flex flex-col items-center justify-center h-screen">
             <Chat socket={socket} username={username} room={room} setShowChat={setShowChat} />
         </div>

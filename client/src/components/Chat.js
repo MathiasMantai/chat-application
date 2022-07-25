@@ -18,12 +18,11 @@ export default class Chat extends React.Component {
                 message: this.state.message,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             }
-            //eigene nachrichten andere farbe als fremde
-            //eigene nachrichtren nach rechts schieben
+
             this.setState(
                 {messageList: [this.state.messageList, <div className="w-full p-3"><Message author={messageData.author} message={messageData.message} time={messageData.time} source="self" /></div>]}
             );
-            // console.log(this.state.messageList);
+
             await this.props.socket.emit("sendMessage", messageData);
             this.setState({message: ""});
         }
@@ -34,7 +33,7 @@ export default class Chat extends React.Component {
             this.setState(
                 {messageList: [this.state.messageList, <div className="w-full p-3"><Message author={data.author} message={data.message } time={data.time} source="other" /></div>]}
             );
-            // console.log(this.state.messageList);
+
         });
     }
 
@@ -50,19 +49,26 @@ export default class Chat extends React.Component {
 
     render = () => {
         return (
-            <div className="w-1/3 content-box">
-                <div id="chat-header border border-md">
-                    Raum: {this.props.room} <button className="bg-emerald-600 text-white p-2 rounded-md" onClick={this.disconnect}>Verbindung Trennen</button>
+            <div className="w-1/3">
+                <div className="chat-header border border-md align-middle space-between flow-root">
+                    <div className="float-left align-middle">
+                        Raum: {this.props.room}
+                    </div> 
+                    <div className="float-right">
+                        <button className="bg-emerald-600 text-white p-2" onClick={this.disconnect}>
+                            Verbindung Trennen
+                        </button>
+                    </div>
                 </div>
-                <div id="chat-body h-1/2 min-h-1/2 max-h-1/2 overflow-auto block border border-md border-black block">
+                <div className="min-h-[50vh] max-h-[50vh] overflow-auto border border-md">
                     {this.state.messageList}
                 </div>
-                <div id="chat-footer">
-                    <input type="text" placeholder="..." value={this.state.message} onChange={(event) => {
+                <div className="chat-footer border border-md">
+                    <input type="text" className="w-5/6 p-2" placeholder="Deine Nachricht" value={this.state.message} onChange={(event) => {
                         this.setState({message: event.target.value});
                     }}
                       />
-                    <button className=""onClick={this.sendMessage}>Senden</button>
+                    <button className="bg-emerald-600 text-white p-2 w-1/6" onClick={this.sendMessage}>Senden</button>
                 </div>
             </div>
         )
