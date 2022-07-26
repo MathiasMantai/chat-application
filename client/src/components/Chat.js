@@ -49,8 +49,8 @@ export default class Chat extends React.Component {
 
     render = () => {
         return (
-            <div className="w-1/3">
-                <div className="chat-header border border-md align-middle space-between flow-root">
+            <div className="w-2/3 sm:w-1/3">
+                <div className="chat-header border border-md border-zinc-500 align-middle space-between flow-root">
                     <div className="float-left p-2">
                         Raum: {this.props.room}
                     </div> 
@@ -60,10 +60,10 @@ export default class Chat extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div className="min-h-[50vh] max-h-[50vh] overflow-auto border border-md">
+                <div className="min-h-[50vh] max-h-[50vh] overflow-auto border border-md border-zinc-500">
                     {this.state.messageList}
                 </div>
-                <div className="chat-footer border border-md">
+                <div className="chat-footer border border-md border-zinc-500">
                     <input type="text" className="w-5/6 p-2" placeholder="Deine Nachricht" value={this.state.message} onChange={(event) => {
                         this.setState(
                             {message: event.target.value}
