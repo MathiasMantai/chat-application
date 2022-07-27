@@ -14,7 +14,7 @@ const io = new Server(server, {
         method: ["POST", "GET"],
         transports: ["websocket"]
     }
-})
+});
 
 io.on('connection', (socket) => {
     console.log('User verbunden: ' + socket.id);
@@ -22,11 +22,10 @@ io.on('connection', (socket) => {
     socket.on('connectToRoom', (data) => {
         socket.join(data);
         console.log("User " + socket.id + " ist Raum " + data + " beigetreten");
-        socket.to(data).emit("memberList", "test");
     });
 
     socket.on('disconnectRoom', (room) => {
-        socket.leave(room)
+        socket.leave(room);
     });
 
     socket.on("sendMessage", (messageData) => {

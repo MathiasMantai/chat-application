@@ -20,7 +20,16 @@ export default class Chat extends React.Component {
             }
 
             this.setState(
-                {messageList: [this.state.messageList, <div className="w-full p-3"><Message author={messageData.author} message={messageData.message} time={messageData.time} source="self" /></div>]}
+                {messageList: [this.state.messageList, 
+                    <div className="w-full p-3">
+                        <Message 
+                            author={messageData.author} 
+                            message={messageData.message} 
+                            time={messageData.time} 
+                            source="self" 
+                        />
+                    </div>
+                ]}
             );
 
             await this.props.socket.emit("sendMessage", messageData);
@@ -30,10 +39,16 @@ export default class Chat extends React.Component {
 
     componentDidMount = () => {
         this.props.socket.on("receiveMessage", (data) => {
-            this.setState(
-                {messageList: [this.state.messageList, <div className="w-full p-3"><Message author={data.author} message={data.message } time={data.time} source="other" /></div>]}
-            );
-
+            this.setState({messageList: [this.state.messageList, 
+                <div className="w-full p-3">
+                    <Message 
+                        author={data.author} 
+                        message={data.message } 
+                        time={data.time} 
+                        source="other" 
+                    />
+                </div>
+            ]});
         });
     }
 
@@ -52,7 +67,7 @@ export default class Chat extends React.Component {
             <div className="w-2/3 sm:w-1/3">
                 <div className="chat-header border border-md border-zinc-500 align-middle space-between flow-root">
                     <div className="float-left p-2">
-                        Raum: {this.props.room}
+                        User: {this.props.username} | Raum: {this.props.room}
                     </div> 
                     <div className="float-right">
                         <button className="bg-emerald-600 text-white p-2" onClick={this.disconnect}>
