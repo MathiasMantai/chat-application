@@ -43,7 +43,7 @@ export default class Chat extends React.Component {
                 <div className="w-full p-3">
                     <Message 
                         author={data.author} 
-                        message={data.message } 
+                        message={data.message} 
                         time={data.time} 
                         source="other" 
                     />
